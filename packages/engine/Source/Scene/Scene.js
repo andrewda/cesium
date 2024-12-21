@@ -3143,6 +3143,7 @@ const scratch2DViewportCameraTransform = new Matrix4();
 const scratch2DViewportEyePoint = new Cartesian3();
 const scratch2DViewportWindowCoords = new Cartesian3();
 const scratch2DViewport = new BoundingRectangle();
+const scratch2DFrustum = new OrthographicOffCenterFrustum();
 
 /**
  * Execute the draw commands to render into a 2D viewport.
@@ -3174,7 +3175,7 @@ function execute2DViewportCommands(scene, passState) {
     camera.transform,
     scratch2DViewportCameraTransform,
   );
-  const frustum = camera.frustum.clone();
+  const frustum = camera.frustum.clone(scratch2DFrustum);
 
   camera._setTransform(Matrix4.IDENTITY);
 
@@ -3312,7 +3313,7 @@ function execute2DViewportCommands(scene, passState) {
   camera._setTransform(transform);
   camera.position.x = position.x;
   camera.position.y = position.y;
-  camera.frustum = frustum.clone();
+  frustum.clone(camera.frustum);
   passState.viewport = originalViewport;
 }
 
