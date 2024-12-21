@@ -3310,7 +3310,8 @@ function execute2DViewportCommands(scene, passState) {
   }
 
   camera._setTransform(transform);
-  Cartesian3.clone(position, camera.position);
+  camera.position.x = position.x;
+  camera.position.y = position.y;
   camera.frustum = frustum.clone();
   passState.viewport = originalViewport;
 }
